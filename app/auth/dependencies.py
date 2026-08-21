@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
 from jose import JWTError
 from sqlalchemy.orm import Session
 
@@ -7,16 +7,17 @@ from app.database import get_db
 from app.auth.security import decode_token
 from app.models.user import User, UserRole
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = HTTPBearer()
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
+def get_current_user(cred: HTTPAuthorizationCredentials = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        token = cred.credentials
         payload = decode_token(token)
         if payload.get("type") != "access":
             raise credentials_exception
@@ -52,7 +53,6 @@ def require_roles(*allowed_roles: UserRole):
     return role_checker
 
 
-# Convenience aliases used across routes
 require_admin = require_roles(UserRole.SUPER_ADMIN)
 require_management = require_roles(UserRole.SUPER_ADMIN, UserRole.TOUR_MANAGER)
 require_operations = require_roles(UserRole.SUPER_ADMIN, UserRole.TOUR_MANAGER, UserRole.BOOKING_AGENT)
