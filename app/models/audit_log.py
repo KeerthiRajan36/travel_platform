@@ -7,7 +7,6 @@ from app.database import Base
 
 
 class AuditLog(Base):
-    """Lightweight audit trail for security-sensitive / state-changing actions."""
 
     __tablename__ = "audit_logs"
 

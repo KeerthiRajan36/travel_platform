@@ -40,8 +40,7 @@ def create_booking(db: Session, payload: BookingCreate) -> Booking:
             f"available={package.available_slots}"
         )
 
-    # Duplicate booking rule: a customer cannot hold more than one
-    # active (Pending/Confirmed) booking for the same package.
+    
     existing = db.execute(
         select(Booking).where(
             and_(

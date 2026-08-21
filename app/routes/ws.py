@@ -10,15 +10,7 @@ router = APIRouter(tags=["Live Booking Status (WebSocket)"])
 
 @router.websocket("/ws/bookings/{booking_id}")
 async def booking_status_websocket(websocket: WebSocket, booking_id: int):
-    """Live booking status feed.
 
-    Connect with any WebSocket client, e.g.:
-        wscat -c ws://localhost:8000/ws/bookings/1
-
-    On connect, immediately sends the booking's current status. After that,
-    it pushes a message every time the booking's status changes (payment
-    confirms it, it gets cancelled, etc.) via the connection manager.
-    """
     await manager.connect(booking_id, websocket)
 
     db: Session = SessionLocal()
@@ -33,8 +25,7 @@ async def booking_status_websocket(websocket: WebSocket, booking_id: int):
 
     try:
         while True:
-            # This endpoint is push-only; we just keep the socket open and
-            # discard anything the client sends (e.g. ping frames).
+            
             await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect(booking_id, websocket)

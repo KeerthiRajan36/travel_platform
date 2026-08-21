@@ -20,8 +20,7 @@ def create_review(
     db: Session = Depends(get_db),
     _=Depends(require_operations),
 ):
-    # customer_id is passed explicitly since reviews are submitted on
-    # behalf of a Customer record (see Level 5), not tied 1:1 to a User login.
+    
     return review_service.create_review(db, customer_id, payload)
 
 

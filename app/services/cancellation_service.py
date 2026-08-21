@@ -12,12 +12,7 @@ from app.services.cache_service import cache_clear
 
 
 def _refund_percentage_for(days_before_tour: int) -> float:
-    """Cancellation policy:
-    15+ days   -> 90% refund
-    7-14 days  -> 70% refund
-    2-6 days   -> 40% refund
-    < 2 days   -> 0% refund
-    """
+
     if days_before_tour >= 15:
         return 90.0
     if 7 <= days_before_tour <= 14:

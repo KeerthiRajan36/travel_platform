@@ -1,0 +1,23 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy
+pydantic
+pydantic-settings
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt
+python-multipart
+alembic
+pytest
+httpx
+email-validator
+argon2--cffi
+
+# --- Bonus features -------------------------------------------------------
+reportlab          # PDF booking confirmations
+qrcode[pil]         # QR codes for bookings
+openpyxl            # Excel report export
+websockets            # live booking status over WebSocket
+cachetools            # in-memory TTL cache (Redis-compatible interface)
+redis                   # optional distributed cache backend
+celery                   # optional scheduled jobs (needs a running broker)

@@ -9,11 +9,6 @@ ModelType = TypeVar("ModelType", bound=Base)
 
 
 class CRUDBase(Generic[ModelType]):
-    """Generic repository providing basic CRUD + pagination for a model.
-
-    Entity-specific repositories can subclass this and add custom queries
-    (filters, joins, aggregate reports, etc.) on top.
-    """
 
     def __init__(self, model: Type[ModelType]):
         self.model = model

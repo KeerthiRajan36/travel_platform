@@ -18,10 +18,6 @@ class NotificationType(str, enum.Enum):
 
 
 class Notification(Base):
-    """Stores outbound notifications. In this project notifications are
-    simulated (logged + persisted) instead of being sent through a real
-    email/SMS provider — swap `notification_service.send` for a real
-    integration when one is available."""
 
     __tablename__ = "notifications"
 

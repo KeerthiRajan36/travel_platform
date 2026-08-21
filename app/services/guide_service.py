@@ -18,8 +18,7 @@ def assign_guide_to_package(db: Session, package_id: int, guide_id: int) -> Guid
     if guide.availability_status == GuideAvailability.INACTIVE:
         raise BadRequestError("Inactive guides cannot be assigned")
 
-    # Overlap check: guide cannot be assigned to two tours whose date
-    # ranges intersect.
+
     overlap = db.execute(
         select(GuideAssignment).where(
             and_(

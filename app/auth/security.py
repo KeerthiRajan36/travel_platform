@@ -42,5 +42,4 @@ def create_refresh_token(user_id: int) -> str:
 
 
 def decode_token(token: str) -> dict:
-    """Raises jose.JWTError on invalid/expired token."""
     return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
